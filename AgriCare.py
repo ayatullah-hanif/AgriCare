@@ -2,7 +2,7 @@
 import streamlit as st
 import numpy as np
 from PIL import Image
-import io, os, hashlib, datetime, csv, json
+import io, os, hashlib, datetime, csv, json, time
 from tensorflow.keras.models import load_model
 from gtts import gTTS
 from deep_translator import GoogleTranslator
@@ -102,7 +102,6 @@ ADVICE = {
         )
     }
 }
-
 
 LANG_CODE = {"English": "en", "Hausa": "ha", "Yoruba": "yo"}
 
@@ -210,7 +209,7 @@ if uploaded_file and model:
         audio_path = text_to_speech_cached(advice_text, target_code)
         if audio_path:
             st.audio(audio_path)
-          else:
+    else:
         st.warning("Low confidence prediction. Image queued for human review.")
         note = st.text_area("Optional note for review")
         if st.button("Queue for review"):
@@ -224,7 +223,6 @@ st.subheader("🎬 Demo Simulation Mode")
 demo_mode = st.checkbox("Activate Demo Mode (Show All Diseases Sequentially)", value=False)
 
 if demo_mode:
-    import time
     demo_images = [
         "Cassava___bacterial_blight",
         "Cassava___brown_streak_disease",
